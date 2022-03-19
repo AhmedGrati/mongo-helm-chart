@@ -1,0 +1,12 @@
+kind: "PersistentVolumeClaim"
+apiVersion: "v1"
+metadata:
+  name: mongodb-pvc
+  annotations:
+    volume.beta.kubernetes.io/storage-class: {{ .Values.mongodb.persistence.storageClass | quote }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.mongodb.persistence.size }}

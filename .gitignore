@@ -1,0 +1,3 @@
+.idea
+charts
+mongo-helm-chart/templates/mongodb-secret.yaml

@@ -1,0 +1,18 @@
+mongodb:
+#  architecture: "replicaset"
+  useStatefulSet: true
+  replicaCount: 1
+  auth:
+    enabled: true
+    rootUser: "root"
+    usernames:
+      - "graylog"
+    databases:
+      - graylog
+    existingSecret: mongodb-secret
+  persistence:
+    existingClaim: mongodb-pvc
+    enabled: true
+    storageClass: mongodb-storage-class
+    accessModes: ["ReadWriteOnce"]
+    size: 10Gi

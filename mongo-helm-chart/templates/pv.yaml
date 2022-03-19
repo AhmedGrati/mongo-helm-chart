@@ -1,0 +1,26 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: mongodb-data
+  labels:
+    type: local
+spec:
+  storageClassName: {{ .Values.mongodb.persistence.storageClass | quote }}
+  capacity:
+    storage: {{ .Values.mongodb.persistence.size }}
+  local:
+    path: /kubernetes-persistent-volume/mongodb
+  persistentVolumeReclaimPolicy: Retain
+  accessModes:
+    - ReadWriteOnce
+  claimRef:
+     namespace: {{ .Release.Namespace }}
+     name: mongodb-pvc
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+          - key: kubernetes.io/hostname
+            operator: In
+            values:
+              - minikube
