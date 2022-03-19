@@ -16,3 +16,11 @@ mongodb:
     storageClass: mongodb-storage-class
     accessModes: ["ReadWriteOnce"]
     size: 10Gi
+  volumeNodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - minikube

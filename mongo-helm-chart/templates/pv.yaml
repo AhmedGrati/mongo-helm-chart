@@ -11,16 +11,15 @@ spec:
   local:
     path: /kubernetes-persistent-volume/mongodb
   persistentVolumeReclaimPolicy: Retain
+  {{- range .Values.mongodb.persistence.accessModes }}
   accessModes:
-    - ReadWriteOnce
+    - {{ . }}
+  {{- end }}
   claimRef:
      namespace: {{ .Release.Namespace }}
-     name: mongodb-pvc
+     name: {{ .Values.mongodb.persistence.existingClaim }}
+  {{- with .Values.mongodb.volumeNodeAffinity }}
   nodeAffinity:
-    required:
-      nodeSelectorTerms:
-        - matchExpressions:
-          - key: kubernetes.io/hostname
-            operator: In
-            values:
-              - minikube
+    {{- toYaml . | nindent 4}}
+  {{- end }}
+

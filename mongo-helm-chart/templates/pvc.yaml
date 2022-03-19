@@ -1,12 +1,14 @@
 kind: "PersistentVolumeClaim"
 apiVersion: "v1"
 metadata:
-  name: mongodb-pvc
+  name: {{ .Values.mongodb.persistence.existingClaim }}
   annotations:
     volume.beta.kubernetes.io/storage-class: {{ .Values.mongodb.persistence.storageClass | quote }}
 spec:
+  {{- range .Values.mongodb.persistence.accessModes }}
   accessModes:
-    - ReadWriteOnce
+    - {{ . }}
+  {{- end }}
   resources:
     requests:
       storage: {{ .Values.mongodb.persistence.size }}
