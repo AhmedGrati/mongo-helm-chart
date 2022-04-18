@@ -23,5 +23,4 @@ mongodb:
             - key: kubernetes.io/hostname
               operator: In
               values:
-                - minikube
                 - tunmonit
